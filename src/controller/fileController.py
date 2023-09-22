@@ -98,7 +98,7 @@ def save_n_xml_to_excel(listaf: schemas.ListaFile) -> bool:
       # print(modelo_excel)
       lista_modelos.append(modelo_excel)
     #armar un excel con el diccionario.
-    save_nxml_to_excel(lista_modelos)
+    save_to_excel(lista_modelos)
     return True # indica que todo funciona de manera correcta.
 
   except(Exception) as err:
