@@ -58,7 +58,7 @@ def save_folder_to_excel(list_doc,path):
     print('finalizado')
 
 # metodo para guardar la lista de modelos
-def save_n_xml_to_excel(listaf: schemas.ListaFile) -> bool:
+def save_n_xml_to_excel(listaf: schemas.ListaFile) -> str:
   try:
     lista_modelos= []
     # print('parametros de endpoint lista')
@@ -99,8 +99,8 @@ def save_n_xml_to_excel(listaf: schemas.ListaFile) -> bool:
       # print(modelo_excel)
       lista_modelos.append(modelo_excel)
     #armar un excel con el diccionario.
-    save_to_excel(lista_modelos)
-    return True # indica que todo funciona de manera correcta.
+    url = save_to_excel(lista_modelos)
+    return url # indica que todo funciona de manera correcta.
 
   except(Exception) as err:
     content = schemas.Response(
@@ -134,17 +134,17 @@ def save_to_excel(data):
   fecha_actual = datetime.datetime.now().date()
   nombre_ramdom= uuid.uuid1()
 
-  #preguntar sitema operativo
-  systemAux = platform.system()
-  directoryAux =''
-  #preguntar si existe carpeta
-  if str(systemAux) == 'Windows':
-    directoryAux = 'C:/file_output'
-  else:
-    currentRoute = os.path.dirname(os.path.abspath(__file__))
-    directoryAux = currentRoute + '/file_output/'
+  # systemAux = platform.system()  #preguntar sitema operativo
+  separador = os.path.sep #separador depende del sistema operativo
+  currentRoute = os.path.dirname(os.path.abspath(__file__))
+  dir = separador.join(currentRoute.split(separador)[:-1])
+  directoryAux = dir + separador + 'file_output' + separador
+  # directoryAux = 'C:/file_output' #antes guardaba en local
 
   Path(directoryAux).mkdir(exist_ok=True)
 
-  wb.save(directoryAux+str(fecha_actual)+'_'+str(nombre_ramdom)+'.xlsx')
+  name_file = str(fecha_actual)+'_'+str(nombre_ramdom)+'.xlsx'
+
+  wb.save(directoryAux + name_file)
   # wb.save('C:/doc_generate/'+str(fecha_actual)+'_'+str(nombre_ramdom)+'.xlsx')
+  return directoryAux+name_file

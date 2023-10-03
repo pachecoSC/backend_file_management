@@ -18,7 +18,7 @@ async def save_nxml_to_excel(params: schemas.ListaFile):
     print('test pass1 success')
     respons = schemas.Response(
       cod_respuesta='1',
-      message='el excel se genero de manera correcta. C:/doc_generate/',
+      message='el excel se genero de manera correcta.'+ resp,
       data={})
     estado =status.HTTP_200_OK
     # value='success'
