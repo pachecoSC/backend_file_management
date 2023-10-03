@@ -1,6 +1,7 @@
 from fastapi import HTTPException, status
 import base64, openpyxl,datetime,uuid
 import xml.etree.ElementTree as ET
+import platform, os
 
 from pathlib import Path
 
@@ -133,8 +134,17 @@ def save_to_excel(data):
   fecha_actual = datetime.datetime.now().date()
   nombre_ramdom= uuid.uuid1()
 
+  #preguntar sitema operativo
+  systemAux = platform.system()
+  directoryAux =''
   #preguntar si existe carpeta
-  Path('C:/file_output').mkdir(exist_ok=True)
+  if str(systemAux) == 'Windows':
+    directoryAux = 'C:/file_output'
+  else:
+    currentRoute = os.path.dirname(os.path.abspath(__file__))
+    directoryAux = currentRoute + '/file_output/'
 
-  wb.save('C:/file_output/'+str(fecha_actual)+'_'+str(nombre_ramdom)+'.xlsx')
+  Path(directoryAux).mkdir(exist_ok=True)
+
+  wb.save(directoryAux+str(fecha_actual)+'_'+str(nombre_ramdom)+'.xlsx')
   # wb.save('C:/doc_generate/'+str(fecha_actual)+'_'+str(nombre_ramdom)+'.xlsx')

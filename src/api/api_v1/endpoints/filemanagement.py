@@ -37,7 +37,7 @@ async def save_nxml_to_excel(params: schemas.ListaFile):
 
 #trabaja con varios xml desde una carpeta de windows
 @router.get("/save_ndatafromfolder")
-async def save_nxml_to_excel():
+async def savefolder_nxml_to_excel():
   # params = {}
   lista_doc = []
   path = 'C:\\file_input\\'
